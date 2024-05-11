@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+
+  .event-card {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .event-card:hover {
+    cursor: pointer;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .event-card h2 {
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .event-card p {
+    font-size: 16px;
+    color: #000;
+  }
+
+  .event-card h3 {
+    color: #000;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 0;
+    color: #000;
+  }
+
+  li {
+    padding: 5px 0;
+    font-size: 14px;
+    color: #000;
+  } 
+  a{
+    text-decoration: none;
+  }
+</style>
+
+{% if events %} {% for event in events %}
+<div class="event-card">
+  <a href="{% url 'detail-event' event.pk %}">
+    <h2>{{ event.address }}, {{ event.time }}</h2>
+    <p>
+      <strong>Cliente:</strong> {{ event.client_name }}<br /><strong
+        >Convidados:</strong
+      >
+      {{ event.guests }}
+    </p>
+    <h3>Funcionários:</h3>
+    <ul>
+      {% for employee in event.employees.all %}
+      <li>{{ employee.name }}</li>
+      {% endfor %}
+    </ul>
+  </a>
+</div>
+{% endfor %} {% else %}
+<p>Nenhum evento encontrado.</p>
+{% endif %} {% endblock %}
